@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Intake cliente — Essential Presencia | Step Up Business Solutions</title>
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --panel: #ffffff;
+      --soft: #f1f5f9;
+      --line: #dbe4ee;
+      --text: #0f172a;
+      --muted: #64748b;
+      --dark: #0b1220;
+      --accent: #0f766e;
+      --accent-soft: #ecfeff;
+      --warn: #fff7ed;
+      --warn-line: #fed7aa;
+      --radius-xl: 28px;
+      --radius-lg: 22px;
+      --radius-md: 16px;
+      --shadow: 0 12px 32px rgba(15, 23, 42, 0.06);
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; font-family: Inter, Arial, sans-serif; background: var(--bg); color: var(--text); }
+    body { min-height: 100vh; }
+    button, input, select, textarea { font: inherit; }
+    .page { max-width: 1240px; margin: 0 auto; padding: 28px 18px 48px; }
+    .hero, .panel, .preview-card {
+      background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius-xl); box-shadow: var(--shadow);
+    }
+    .hero {
+      padding: 28px; display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 22px; margin-bottom: 24px;
+    }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--line); background: var(--soft); padding: 8px 12px;
+      border-radius: 999px; font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted);
+    }
+    h1, h2, h3, p { margin: 0; }
+    h1 { margin-top: 14px; font-size: clamp(30px, 4vw, 44px); line-height: 1.08; letter-spacing: -0.03em; }
+    .lead { margin-top: 12px; color: var(--muted); line-height: 1.72; font-size: 15px; max-width: 760px; }
+    .tip-box {
+      border: 1px solid var(--warn-line); background: var(--warn); border-radius: 24px; padding: 18px; display: grid; gap: 10px; align-content: start;
+    }
+    .tip-box h3 { font-size: 16px; }
+    .tip-box ul { margin: 0; padding-left: 18px; color: #7c2d12; line-height: 1.7; font-size: 14px; }
+    .layout { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 24px; align-items: start; }
+    .panel { padding: 22px; display: grid; gap: 18px; }
+    .panel-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 14px; }
+    .panel-header p { margin-top: 6px; color: var(--muted); font-size: 14px; line-height: 1.6; }
+    .actions { display: flex; gap: 10px; flex-wrap: wrap; }
+    .btn, .btn-dark, .btn-soft {
+      border-radius: 999px; padding: 11px 16px; font-size: 14px; font-weight: 600; cursor: pointer; border: 1px solid var(--line); transition: 0.2s ease;
+    }
+    .btn { background: #fff; color: var(--text); }
+    .btn:hover, .btn-soft:hover { background: #f8fafc; }
+    .btn-dark { background: var(--dark); color: #fff; border-color: var(--dark); }
+    .btn-dark:hover { opacity: 0.92; }
+    .btn-soft { background: var(--accent-soft); color: var(--accent); border-color: #a5f3fc; }
+    .section-card {
+      border: 1px solid var(--line); background: #fff; border-radius: 24px; padding: 18px; display: grid; gap: 16px;
+    }
+    .section-card h3 { font-size: 18px; line-height: 1.2; }
+    .section-note { color: var(--muted); font-size: 13px; line-height: 1.6; }
+    .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+    .field { display: flex; flex-direction: column; gap: 8px; }
+    .field label, .field-head strong { font-size: 13px; font-weight: 700; color: #1e293b; }
+    .field-head { display: flex; justify-content: space-between; gap: 10px; align-items: center; }
+    .field-head span, .helper { color: var(--muted); font-size: 12px; }
+    input, textarea, select {
+      width: 100%; border: 1px solid var(--line); background: #fff; color: var(--text); border-radius: 16px; padding: 13px 14px; outline: none;
+    }
+    input:focus, textarea:focus, select:focus {
+      border-color: #94a3b8; box-shadow: 0 0 0 4px rgba(148, 163, 184, 0.12);
+    }
+    textarea { min-height: 92px; resize: vertical; line-height: 1.6; }
+    .preview-column { display: grid; gap: 18px; }
+    .preview-card { padding: 20px; }
+    .preview-card h3 { font-size: 18px; }
+    .preview-card p { margin-top: 6px; color: var(--muted); font-size: 14px; line-height: 1.6; }
+    .summary-list { margin-top: 16px; display: grid; gap: 16px; }
+    .summary-section { border: 1px solid var(--line); border-radius: 18px; background: #fff; padding: 14px; }
+    .summary-section h4 { margin: 0 0 10px; font-size: 14px; }
+    .summary-line { font-size: 14px; line-height: 1.7; margin-bottom: 6px; color: var(--text); white-space: pre-wrap; word-break: break-word; }
+    .summary-line strong { color: #334155; }
+    .empty-box {
+      margin-top: 16px; border: 1px solid var(--line); border-radius: 18px; background: #fff; padding: 16px; color: var(--muted); font-size: 14px;
+    }
+    .code-box {
+      margin-top: 14px; background: var(--dark); color: #dbeafe; border-radius: 20px; padding: 16px; font-size: 12px; line-height: 1.8;
+      white-space: pre-wrap; word-break: break-word; max-height: 380px; overflow: auto;
+    }
+    .small-note { margin-top: 10px; font-size: 12px; color: var(--muted); line-height: 1.6; }
+    .hidden { display: none; }
+    @media (max-width: 1080px) {
+      .hero, .layout { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 760px) {
+      .page { padding: 18px 14px 34px; }
+      .hero, .panel, .preview-card { padding: 18px; }
+      .grid-2 { grid-template-columns: 1fr; }
+      .panel-header { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <section class="hero">
+      <div>
+        <div class="eyebrow">Step Up Business Solutions</div>
+        <h1>Formulario cliente — Essential Presencia</h1>
+        <p class="lead">
+          Este formulario recoge la información base para construir su landing. Complete todo lo que pueda.
+          Si no sabe exactamente qué poner en un campo de copy, escriba su intención, idea central o palabras clave.
+        </p>
+      </div>
+      <div class="tip-box">
+        <h3>Antes de empezar</h3>
+        <ul>
+          <li>Si ya tiene textos, puede pegarlos.</li>
+          <li>Si no tiene textos, escriba lo que quiere transmitir.</li>
+          <li>Si no sabe un dato exacto, deje una intención breve.</li>
+          <li>Step Up puede tomar esta base y convertirla en propuesta de copy.</li>
+        </ul>
+      </div>
+    </section>
+
+    <div class="layout">
+      <section class="panel">
+        <div class="panel-header">
+          <div>
+            <h2>Formulario de captura</h2>
+            <p>Los campos están organizados por bloque para facilitar diligenciamiento, revisión y organización de la información.</p>
+          </div>
+          <div class="actions">
+            <button class="btn" id="fillDemoBtn" type="button">Ver ejemplo</button>
+            <button class="btn" id="clearBtn" type="button">Limpiar</button>
+            <button class="btn-dark" id="buildBtn" type="button">Preparar resumen</button>
+          </div>
+        </div>
+
+        <form id="intakeForm">
+          <div class="section-card">
+            <h3>Información general del negocio</h3>
+            <p class="section-note">Estos datos ayudan a orientar Header, Hero y el resto de la landing.</p>
+            <div class="grid-2">
+              <div class="field">
+                <label for="tipo_negocio">¿De qué va su negocio?</label>
+                <input id="tipo_negocio" name="tipo_negocio" placeholder="Ej. spa y centro de belleza" />
+              </div>
+              <div class="field">
+                <label for="objetivo_landing">Objetivo principal de la landing</label>
+                <input id="objetivo_landing" name="objetivo_landing" placeholder="Ej. atraer clientes, generar interés, agendar citas" />
+              </div>
+              <div class="field">
+                <label for="publico_objetivo">¿A quién quiere atraer?</label>
+                <input id="publico_objetivo" name="publico_objetivo" placeholder="Ej. mujeres que buscan bienestar y cuidado personal" />
+              </div>
+              <div class="field">
+                <label for="tono_marca">Tono deseado</label>
+                <select id="tono_marca" name="tono_marca">
+                  <option value="">Seleccione</option>
+                  <option>Profesional</option>
+                  <option>Cálido</option>
+                  <option>Elegante</option>
+                  <option>Práctico</option>
+                  <option>Cercano</option>
+                  <option>Atractivo</option>
+                  <option>Sobrio</option>
+                </select>
+              </div>
+              <div class="field" style="grid-column:1/-1;">
+                <label for="notas_base">Notas, intención o palabras clave generales</label>
+                <textarea id="notas_base" name="notas_base" placeholder="Ej. quiero que se sienta elegante, confiable, femenino, bien ubicado, fácil de contactar"></textarea>
+              </div>
+            </div>
+          </div>
+
+          <div class="section-card">
+            <h3>Header</h3>
+            <p class="section-note">Si no tiene tagline, puede escribir palabras clave y Step Up propondrá una versión base.</p>
+            <div class="grid-2">
+              <div class="field">
+                <label for="NOMBRE_NEGOCIO">Nombre del negocio o profesional</label>
+                <input id="NOMBRE_NEGOCIO" name="NOMBRE_NEGOCIO" placeholder="Ej. Aura Beauty Studio" />
+              </div>
+              <div class="field">
+                <label for="DESCRIPTOR_NEGOCIO">Tagline / descriptor</label>
+                <input id="DESCRIPTOR_NEGOCIO" name="DESCRIPTOR_NEGOCIO" placeholder="Si no lo tiene, escriba intención o palabras clave" />
+              </div>
+              <div class="field">
+                <label for="TEXTO_CTA_HEADER">Texto del botón header</label>
+                <input id="TEXTO_CTA_HEADER" name="TEXTO_CTA_HEADER" placeholder="Ej. Agendar cita" />
+              </div>
+              <div class="field">
+                <label for="LINK_CTA_HEADER">Enlace del botón header</label>
+                <input id="LINK_CTA_HEADER" name="LINK_CTA_HEADER" placeholder="Ej. https://wa.me/..." />
+              </div>
+            </div>
+          </div>
+
+          <div class="section-card">
+            <h3>Hero / bloque principal</h3>
+            <p class="section-note">Puede pegar textos ya hechos o dejar intención para que luego se convierta en copy.</p>
+            <div class="grid-2">
+              <div class="field">
+                <label for="ETIQUETA_HERO">Etiqueta superior</label>
+                <input id="ETIQUETA_HERO" name="ETIQUETA_HERO" placeholder="Ej. Belleza, cuidado y bienestar" />
+              </div>
+              <div class="field">
+                <label for="TITULO_HERO">Título principal</label>
+                <input id="TITULO_HERO" name="TITULO_HERO" placeholder="Si no sabe, escriba la idea principal del hero" />
+              </div>
+              <div class="field" style="grid-column:1/-1;">
+                <label for="DESCRIPCION_HERO">Descripción breve del hero</label>
+                <textarea id="DESCRIPCION_HERO" name="DESCRIPCION_HERO" placeholder="Puede escribir copy o intención. Ej. quiero comunicar bienestar, profesionalismo, experiencia agradable"></textarea>
+              </div>
+              <div class="field">
+                <label for="TEXTO_CTA_PRINCIPAL">CTA principal</label>
+                <input id="TEXTO_CTA_PRINCIPAL" name="TEXTO_CTA_PRINCIPAL" placeholder="Ej. Agendar cita" />
+              </div>
+              <div class="field">
+                <label for="LINK_CTA_PRINCIPAL">Link CTA principal</label>
+                <input id="LINK_CTA_PRINCIPAL" name="LINK_CTA_PRINCIPAL" placeholder="Ej. https://wa.me/..." />
+              </div>
+              <div class="field">
+                <label for="TEXTO_CTA_SECUNDARIO">CTA secundario</label>
+                <input id="TEXTO_CTA_SECUNDARIO" name="TEXTO_CTA_SECUNDARIO" placeholder="Ej. Cómo llegar" />
+              </div>
+              <div class="field">
+                <label for="LINK_CTA_SECUNDARIO">Link CTA secundario</label>
+                <input id="LINK_CTA_SECUNDARIO" name="LINK_CTA_SECUNDARIO" placeholder="Ej. enlace de Google Maps" />
+              </div>
+              <div class="field">
+                <label for="HORARIO_RESUMIDO">Horario resumido</label>
+                <input id="HORARIO_RESUMIDO" name="HORARIO_RESUMIDO" placeholder="Ej. Lun a sáb · 9:00 a. m. a 7:00 p. m." />
+              </div>
+              <div class="field">
+                <label for="ALT_HERO_IMAGE">Descripción de imagen hero</label>
+                <input id="ALT_HERO_IMAGE" name="ALT_HERO_IMAGE" placeholder="Si no sabe, describa el tipo de foto ideal" />
+              </div>
+            </div>
+          </div>
+
+          <div class="section-card">
+            <h3>Bloque Negocio / Presentación</h3>
+            <div class="grid-2">
+              <div class="field">
+                <label for="ETIQUETA_PRESENTACION">Etiqueta del bloque</label>
+                <input id="ETIQUETA_PRESENTACION" name="ETIQUETA_PRESENTACION" placeholder="Ej. Bienestar que se nota" />
+              </div>
+              <div class="field">
+                <label for="TITULO_PRESENTACION">Título del bloque</label>
+                <input id="TITULO_PRESENTACION" name="TITULO_PRESENTACION" placeholder="Idea central del bloque negocio" />
+              </div>
+              <div class="field" style="grid-column:1/-1;">
+                <label for="TEXTO_PRESENTACION">Texto de presentación</label>
+                <textarea id="TEXTO_PRESENTACION" name="TEXTO_PRESENTACION" placeholder="Puede escribir el texto o solo intención, fortalezas y sensaciones que quiere transmitir"></textarea>
+              </div>
+              <div class="field">
+                <label for="MICRO_VALOR_1">Microvalor 1</label>
+                <input id="MICRO_VALOR_1" name="MICRO_VALOR_1" placeholder="Ej. atención estética profesional" />
+              </div>
+              <div class="field">
+                <label for="MICRO_VALOR_2">Microvalor 2</label>
+                <input id="MICRO_VALOR_2" name="MICRO_VALOR_2" placeholder="Ej. ambiente acogedor" />
+              </div>
+              <div class="field">
+                <label for="MICRO_VALOR_3">Microvalor 3</label>
+                <input id="MICRO_VALOR_3" name="MICRO_VALOR_3" placeholder="Ej. experiencia de belleza y bienestar" />
+              </div>
+              <div class="field">
+                <label for="ALT_PRESENTACION_IMAGE">Descripción de imagen presentación</label>
+                <input id="ALT_PRESENTACION_IMAGE" name="ALT_PRESENTACION_IMAGE" placeholder="Describa la foto ideal de este bloque" />
+              </div>
+            </div>
+          </div>
+
+          <div class="section-card">
+            <h3>Encuéntrenos / información de contacto</h3>
+            <div class="grid-2">
+              <div class="field">
+                <label for="TITULO_INFO">Título de la sección</label>
+                <input id="TITULO_INFO" name="TITULO_INFO" placeholder="Ej. Encuéntrenos en Laureles" />
+              </div>
+              <div class="field">
+                <label for="DIRECCION">Dirección completa</label>
+                <input id="DIRECCION" name="DIRECCION" placeholder="Ej. Calle..., barrio, ciudad" />
+              </div>
+              <div class="field">
+                <label for="ZONA_BARRIO">Barrio o zona</label>
+                <input id="ZONA_BARRIO" name="ZONA_BARRIO" placeholder="Ej. Laureles - Estadio" />
+              </div>
+              <div class="field">
+                <label for="CIUDAD">Ciudad</label>
+                <input id="CIUDAD" name="CIUDAD" placeholder="Ej. Medellín" />
+              </div>
+              <div class="field" style="grid-column:1/-1;">
+                <label for="HORARIO_COMPLETO">Horario completo</label>
+                <textarea id="HORARIO_COMPLETO" name="HORARIO_COMPLETO" placeholder="Ej. Lunes a viernes... / sábados... / domingos..."></textarea>
+              </div>
+              <div class="field">
+                <label for="WHATSAPP">WhatsApp</label>
+                <input id="WHATSAPP" name="WHATSAPP" placeholder="Solo número, sin espacios" />
+              </div>
+              <div class="field">
+                <label for="TELEFONO">Teléfono visible</label>
+                <input id="TELEFONO" name="TELEFONO" placeholder="Ej. +57 300 000 0000" />
+              </div>
+              <div class="field">
+                <label for="EMAIL">Correo</label>
+                <input id="EMAIL" name="EMAIL" placeholder="Ej. hola@negocio.com" />
+              </div>
+              <div class="field">
+                <label for="LINK_MAPA">Link de Google Maps</label>
+                <input id="LINK_MAPA" name="LINK_MAPA" placeholder="Pegue aquí el link de Maps" />
+              </div>
+              <div class="field" style="grid-column:1/-1;">
+                <label for="MAP_EMBED">Código embebido del mapa</label>
+                <textarea id="MAP_EMBED" name="MAP_EMBED" placeholder="Si no lo tiene, puede dejar solo el link de Maps"></textarea>
+              </div>
+            </div>
+          </div>
+
+          <div class="section-card">
+            <h3>CTA final</h3>
+            <div class="grid-2">
+              <div class="field">
+                <label for="TITULO_CTA_FINAL">Título de cierre</label>
+                <input id="TITULO_CTA_FINAL" name="TITULO_CTA_FINAL" placeholder="Idea central del cierre" />
+              </div>
+              <div class="field">
+                <label for="TEXTO_CTA_FINAL">Texto de apoyo</label>
+                <input id="TEXTO_CTA_FINAL" name="TEXTO_CTA_FINAL" placeholder="Si no lo tiene, escriba intención o beneficio final" />
+              </div>
+              <div class="field">
+                <label for="TEXTO_BOTON_CTA_FINAL_PRINCIPAL">Botón principal</label>
+                <input id="TEXTO_BOTON_CTA_FINAL_PRINCIPAL" name="TEXTO_BOTON_CTA_FINAL_PRINCIPAL" placeholder="Ej. Agendar cita" />
+              </div>
+              <div class="field">
+                <label for="LINK_BOTON_CTA_FINAL_PRINCIPAL">Link botón principal</label>
+                <input id="LINK_BOTON_CTA_FINAL_PRINCIPAL" name="LINK_BOTON_CTA_FINAL_PRINCIPAL" placeholder="Ej. https://wa.me/..." />
+              </div>
+              <div class="field">
+                <label for="TEXTO_BOTON_CTA_FINAL_SECUNDARIO">Botón secundario</label>
+                <input id="TEXTO_BOTON_CTA_FINAL_SECUNDARIO" name="TEXTO_BOTON_CTA_FINAL_SECUNDARIO" placeholder="Ej. Cómo llegar" />
+              </div>
+              <div class="field">
+                <label for="LINK_BOTON_CTA_FINAL_SECUNDARIO">Link botón secundario</label>
+                <input id="LINK_BOTON_CTA_FINAL_SECUNDARIO" name="LINK_BOTON_CTA_FINAL_SECUNDARIO" placeholder="Ej. link de Maps" />
+              </div>
+            </div>
+          </div>
+
+          <div class="section-card">
+            <h3>Footer</h3>
+            <div class="grid-2">
+              <div class="field">
+                <label for="DIRECCION_CORTA">Dirección corta</label>
+                <input id="DIRECCION_CORTA" name="DIRECCION_CORTA" placeholder="Ej. Cl. 76 #14-30, Bogotá" />
+              </div>
+              <div class="field">
+                <label for="LINK_INSTAGRAM">Instagram</label>
+                <input id="LINK_INSTAGRAM" name="LINK_INSTAGRAM" placeholder="Pegue el enlace" />
+              </div>
+              <div class="field">
+                <label for="LINK_FACEBOOK">Facebook</label>
+                <input id="LINK_FACEBOOK" name="LINK_FACEBOOK" placeholder="Pegue el enlace" />
+              </div>
+              <div class="field" style="grid-column:1/-1;">
+                <label for="comentarios_finales">Comentarios finales del cliente</label>
+                <textarea id="comentarios_finales" name="comentarios_finales" placeholder="Aquí puede dejar aclaraciones, prioridades o cualquier detalle adicional que considere importante."></textarea>
+              </div>
+            </div>
+          </div>
+        </form>
+      </section>
+
+      <aside class="preview-column">
+        <section class="preview-card">
+          <h3>Vista rápida</h3>
+          <p>Resumen compacto para revisar que sí quedó una base diligenciada.</p>
+          <div id="quickPreview"></div>
+        </section>
+
+        <section class="preview-card">
+          <h3>Resumen de su información</h3>
+          <p>Revise aquí un resumen automático de lo que ha diligenciado antes de compartir la información.</p>
+          <button class="btn-soft" id="copySummaryBtn" type="button">Copiar resumen</button>
+          <div id="summaryBox"></div>
+          <p class="small-note">Este resumen es una vista de apoyo. Step Up revisará la información y la convertirá en una propuesta base de estructura y contenido.</p>
+        </section>
+
+        <section class="preview-card hidden" id="internalPanel">
+          <h3>Uso interno SBS</h3>
+          <p>Este bloque no está pensado para el cliente. Puede usarlo cuando necesite copiar placeholders o conectar un flujo interno.</p>
+          <button class="btn-soft" id="toggleInternalBtn" type="button">Ocultar bloque interno</button>
+          <div class="code-box" id="outputBox"></div>
+        </section>
+      </aside>
+    </div>
+  </div>
+
+  <script>
+    const PLACEHOLDERS = [
+      "NOMBRE_NEGOCIO","DESCRIPTOR_NEGOCIO","TEXTO_CTA_HEADER","LINK_CTA_HEADER",
+      "ETIQUETA_HERO","TITULO_HERO","DESCRIPCION_HERO","TEXTO_CTA_PRINCIPAL","LINK_CTA_PRINCIPAL","TEXTO_CTA_SECUNDARIO","LINK_CTA_SECUNDARIO","HORARIO_RESUMIDO","ALT_HERO_IMAGE",
+      "ETIQUETA_PRESENTACION","TITULO_PRESENTACION","TEXTO_PRESENTACION","MICRO_VALOR_1","MICRO_VALOR_2","MICRO_VALOR_3","ALT_PRESENTACION_IMAGE",
+      "TITULO_INFO","DIRECCION","ZONA_BARRIO","CIUDAD","HORARIO_COMPLETO","WHATSAPP","TELEFONO","EMAIL","LINK_MAPA","MAP_EMBED",
+      "TITULO_CTA_FINAL","TEXTO_CTA_FINAL","TEXTO_BOTON_CTA_FINAL_PRINCIPAL","LINK_BOTON_CTA_FINAL_PRINCIPAL","TEXTO_BOTON_CTA_FINAL_SECUNDARIO","LINK_BOTON_CTA_FINAL_SECUNDARIO",
+      "DIRECCION_CORTA","LINK_INSTAGRAM","LINK_FACEBOOK"
+    ];
+    const EXTRA_FIELDS = ["tipo_negocio","objetivo_landing","publico_objetivo","tono_marca","notas_base","comentarios_finales"];
+
+    const FIELD_LABELS = {
+      tipo_negocio: "¿De qué va su negocio?",
+      objetivo_landing: "Objetivo principal de la landing",
+      publico_objetivo: "¿A quién quiere atraer?",
+      tono_marca: "Tono deseado",
+      notas_base: "Notas, intención o palabras clave generales",
+      comentarios_finales: "Comentarios finales",
+      NOMBRE_NEGOCIO: "Nombre del negocio o profesional",
+      DESCRIPTOR_NEGOCIO: "Tagline / descriptor",
+      TEXTO_CTA_HEADER: "Texto del botón header",
+      LINK_CTA_HEADER: "Enlace del botón header",
+      ETIQUETA_HERO: "Etiqueta superior del hero",
+      TITULO_HERO: "Título principal del hero",
+      DESCRIPCION_HERO: "Descripción breve del hero",
+      TEXTO_CTA_PRINCIPAL: "CTA principal",
+      LINK_CTA_PRINCIPAL: "Link CTA principal",
+      TEXTO_CTA_SECUNDARIO: "CTA secundario",
+      LINK_CTA_SECUNDARIO: "Link CTA secundario",
+      HORARIO_RESUMIDO: "Horario resumido",
+      ALT_HERO_IMAGE: "Descripción de imagen hero",
+      ETIQUETA_PRESENTACION: "Etiqueta del bloque negocio",
+      TITULO_PRESENTACION: "Título del bloque negocio",
+      TEXTO_PRESENTACION: "Texto de presentación",
+      MICRO_VALOR_1: "Microvalor 1",
+      MICRO_VALOR_2: "Microvalor 2",
+      MICRO_VALOR_3: "Microvalor 3",
+      ALT_PRESENTACION_IMAGE: "Descripción de imagen presentación",
+      TITULO_INFO: "Título de la sección de ubicación",
+      DIRECCION: "Dirección completa",
+      ZONA_BARRIO: "Barrio o zona",
+      CIUDAD: "Ciudad",
+      HORARIO_COMPLETO: "Horario completo",
+      WHATSAPP: "WhatsApp",
+      TELEFONO: "Teléfono visible",
+      EMAIL: "Correo",
+      LINK_MAPA: "Link de Google Maps",
+      MAP_EMBED: "Código embebido del mapa",
+      TITULO_CTA_FINAL: "Título de cierre",
+      TEXTO_CTA_FINAL: "Texto de apoyo del cierre",
+      TEXTO_BOTON_CTA_FINAL_PRINCIPAL: "Botón principal de cierre",
+      LINK_BOTON_CTA_FINAL_PRINCIPAL: "Link botón principal de cierre",
+      TEXTO_BOTON_CTA_FINAL_SECUNDARIO: "Botón secundario de cierre",
+      LINK_BOTON_CTA_FINAL_SECUNDARIO: "Link botón secundario de cierre",
+      DIRECCION_CORTA: "Dirección corta",
+      LINK_INSTAGRAM: "Instagram",
+      LINK_FACEBOOK: "Facebook"
+    };
+
+    const SUMMARY_SECTIONS = [
+      { title: "Información general", fields: ["tipo_negocio","objetivo_landing","publico_objetivo","tono_marca","notas_base"] },
+      { title: "Header", fields: ["NOMBRE_NEGOCIO","DESCRIPTOR_NEGOCIO","TEXTO_CTA_HEADER","LINK_CTA_HEADER"] },
+      { title: "Hero / bloque principal", fields: ["ETIQUETA_HERO","TITULO_HERO","DESCRIPCION_HERO","TEXTO_CTA_PRINCIPAL","LINK_CTA_PRINCIPAL","TEXTO_CTA_SECUNDARIO","LINK_CTA_SECUNDARIO","HORARIO_RESUMIDO","ALT_HERO_IMAGE"] },
+      { title: "Bloque Negocio / Presentación", fields: ["ETIQUETA_PRESENTACION","TITULO_PRESENTACION","TEXTO_PRESENTACION","MICRO_VALOR_1","MICRO_VALOR_2","MICRO_VALOR_3","ALT_PRESENTACION_IMAGE"] },
+      { title: "Encuéntrenos / información de contacto", fields: ["TITULO_INFO","DIRECCION","ZONA_BARRIO","CIUDAD","HORARIO_COMPLETO","WHATSAPP","TELEFONO","EMAIL","LINK_MAPA","MAP_EMBED"] },
+      { title: "CTA final", fields: ["TITULO_CTA_FINAL","TEXTO_CTA_FINAL","TEXTO_BOTON_CTA_FINAL_PRINCIPAL","LINK_BOTON_CTA_FINAL_PRINCIPAL","TEXTO_BOTON_CTA_FINAL_SECUNDARIO","LINK_BOTON_CTA_FINAL_SECUNDARIO"] },
+      { title: "Footer", fields: ["DIRECCION_CORTA","LINK_INSTAGRAM","LINK_FACEBOOK","comentarios_finales"] }
+    ];
+
+    const DEMO_DATA = {
+      tipo_negocio: "spa y centro de belleza",
+      objetivo_landing: "atraer clientes y agendar citas",
+      publico_objetivo: "mujeres que buscan cuidado personal, bienestar y estética",
+      tono_marca: "Elegante",
+      notas_base: "quiero que se sienta femenino, profesional, armonioso y fácil de contactar",
+      NOMBRE_NEGOCIO: "Aura Beauty Studio",
+      DESCRIPTOR_NEGOCIO: "Spa y centro de belleza para verse bien y sentirse renovada",
+      TEXTO_CTA_HEADER: "Agendar cita",
+      LINK_CTA_HEADER: "https://wa.me/573005171856",
+      ETIQUETA_HERO: "Belleza, cuidado y bienestar",
+      TITULO_HERO: "Regálese cuidado, belleza y renovación",
+      DESCRIPCION_HERO: "Quiero transmitir bienestar, profesionalismo y una experiencia agradable en Laureles.",
+      TEXTO_CTA_PRINCIPAL: "Agendar cita",
+      LINK_CTA_PRINCIPAL: "https://wa.me/573005171856",
+      TEXTO_CTA_SECUNDARIO: "Cómo llegar",
+      LINK_CTA_SECUNDARIO: "https://maps.app.goo.gl/iFYxGbfVe26mpFhy8",
+      HORARIO_RESUMIDO: "Lun a sáb · 9:00 a. m. a 7:00 p. m.",
+      ALT_HERO_IMAGE: "spa elegante con ambiente relajante y atención estética profesional",
+      ETIQUETA_PRESENTACION: "Bienestar que se nota",
+      TITULO_PRESENTACION: "Un centro de belleza creado para consentir, resaltar y renovar",
+      TEXTO_PRESENTACION: "Quiero mostrar un lugar agradable, limpio, profesional y memorable, donde cada visita se sienta como una pausa valiosa.",
+      MICRO_VALOR_1: "tratamientos estéticos en ambiente limpio y profesional",
+      MICRO_VALOR_2: "lugar acogedor para cuidarse y verse mejor",
+      MICRO_VALOR_3: "experiencia de belleza y bienestar",
+      ALT_PRESENTACION_IMAGE: "cliente recibiendo tratamiento estético en un spa moderno",
+      TITULO_INFO: "Encuéntrenos en Laureles - Estadio",
+      DIRECCION: "Dg 75 # 73B-74, Laureles - Estadio, Medellín, Antioquia",
+      ZONA_BARRIO: "Laureles - Estadio",
+      CIUDAD: "Medellín",
+      HORARIO_COMPLETO: "Lunes a viernes: 9:00 a. m. – 7:00 p. m.\nSábados: 9:00 a. m. – 5:00 p. m.\nDomingos y festivos: cerrado",
+      WHATSAPP: "3005171856",
+      TELEFONO: "+57 300 517 1856",
+      EMAIL: "agenda@aurabeautystudio.com",
+      LINK_MAPA: "https://maps.app.goo.gl/iFYxGbfVe26mpFhy8",
+      MAP_EMBED: "Si no lo tengo, luego Step Up puede insertarlo a partir del link de Maps.",
+      TITULO_CTA_FINAL: "Regálese un espacio para verse bien y sentirse mejor",
+      TEXTO_CTA_FINAL: "quiero cerrar invitando a visitarnos o agendar una cita",
+      TEXTO_BOTON_CTA_FINAL_PRINCIPAL: "Agendar cita",
+      LINK_BOTON_CTA_FINAL_PRINCIPAL: "https://wa.me/573005171856",
+      TEXTO_BOTON_CTA_FINAL_SECUNDARIO: "Cómo llegar",
+      LINK_BOTON_CTA_FINAL_SECUNDARIO: "https://maps.app.goo.gl/iFYxGbfVe26mpFhy8",
+      DIRECCION_CORTA: "Dg 75 #73B-74, Laureles, Medellín",
+      LINK_INSTAGRAM: "https://www.instagram.com/aurabeautystudio.med",
+      LINK_FACEBOOK: "https://www.facebook.com/aurabeautystudio.med",
+      comentarios_finales: "Quiero que la landing se vea elegante, fácil de entender y enfocada en agendar."
+    };
+
+    function getFieldValue(id) {
+      const el = document.getElementById(id);
+      return el ? el.value.trim() : "";
+    }
+    function setFieldValue(id, value) {
+      const el = document.getElementById(id);
+      if (el) el.value = value || "";
+    }
+    function buildPayload() {
+      const payload = {};
+      EXTRA_FIELDS.forEach((key) => payload[key] = getFieldValue(key));
+      PLACEHOLDERS.forEach((key) => payload[key] = getFieldValue(key));
+      payload.fecha_registro = new Date().toISOString();
+      return payload;
+    }
+    function buildInternalText(payload) {
+      return PLACEHOLDERS.map((key) => `{{${key}}}=${payload[key] || ""}`).join("\n");
+    }
+    function buildSummarySections(payload) {
+      const sections = [];
+      SUMMARY_SECTIONS.forEach((section) => {
+        const lines = section.fields
+          .filter((field) => payload[field])
+          .map((field) => ({ label: FIELD_LABELS[field] || field, value: payload[field] }));
+        if (lines.length) sections.push({ title: section.title, lines });
+      });
+      return sections;
+    }
+    function renderQuickPreview(payload) {
+      const quickKeys = ["NOMBRE_NEGOCIO","DESCRIPTOR_NEGOCIO","TITULO_HERO","DIRECCION","WHATSAPP","EMAIL"];
+      const box = document.getElementById("quickPreview");
+      const lines = quickKeys.filter((key) => payload[key]).map((key) => `<div class="summary-line"><strong>${FIELD_LABELS[key]}:</strong> ${escapeHtml(payload[key])}</div>`);
+      box.innerHTML = lines.length
+        ? `<div class="summary-section">${lines.join("")}</div>`
+        : `<div class="empty-box">Aún no hay datos preparados.</div>`;
+    }
+    function renderSummary(payload) {
+      const sections = buildSummarySections(payload);
+      const summaryBox = document.getElementById("summaryBox");
+      if (!sections.length) {
+        summaryBox.innerHTML = `<div class="empty-box">Aún no hay información diligenciada.</div>`;
+        return;
+      }
+      summaryBox.innerHTML = `<div class="summary-list">` + sections.map((section) => {
+        const lines = section.lines.map((line) => `<div class="summary-line"><strong>${escapeHtml(line.label)}:</strong> ${escapeHtml(line.value)}</div>`).join("");
+        return `<div class="summary-section"><h4>${escapeHtml(section.title)}</h4>${lines}</div>`;
+      }).join("") + `</div>`;
+    }
+    function escapeHtml(text) {
+      return String(text)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/\"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+    function refreshOutput() {
+      const payload = buildPayload();
+      renderQuickPreview(payload);
+      renderSummary(payload);
+      document.getElementById("outputBox").textContent = buildInternalText(payload);
+      return payload;
+    }
+    function fillDemo() {
+      Object.keys(DEMO_DATA).forEach((key) => setFieldValue(key, DEMO_DATA[key]));
+      refreshOutput();
+    }
+    function clearAll() {
+      EXTRA_FIELDS.forEach((key) => setFieldValue(key, ""));
+      PLACEHOLDERS.forEach((key) => setFieldValue(key, ""));
+      refreshOutput();
+    }
+    async function copySummary() {
+      const payload = buildPayload();
+      const sections = buildSummarySections(payload);
+      const text = sections.length
+        ? sections.map((section) => section.title + "\n" + section.lines.map((line) => `${line.label}: ${line.value}`).join("\n")).join("\n\n")
+        : "Aún no hay información diligenciada.";
+      try {
+        await navigator.clipboard.writeText(text);
+        const btn = document.getElementById("copySummaryBtn");
+        const original = btn.textContent;
+        btn.textContent = "Copiado";
+        setTimeout(() => btn.textContent = original, 900);
+      } catch (error) {
+        alert("No se pudo copiar automáticamente.");
+      }
+    }
+    function toggleInternalPanel() {
+      const panel = document.getElementById("internalPanel");
+      panel.classList.add("hidden");
+    }
+
+    document.getElementById("fillDemoBtn").addEventListener("click", fillDemo);
+    document.getElementById("clearBtn").addEventListener("click", clearAll);
+    document.getElementById("buildBtn").addEventListener("click", refreshOutput);
+    document.getElementById("copySummaryBtn").addEventListener("click", copySummary);
+    document.getElementById("toggleInternalBtn").addEventListener("click", toggleInternalPanel);
+    document.getElementById("intakeForm").addEventListener("input", refreshOutput);
+
+    refreshOutput();
+  </script>
+</body>
+</html>
